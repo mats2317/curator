@@ -109,7 +109,7 @@ esac
 
 # Improve RPM dependency for RHEL/Centos 7
 if [ "$VERSION_ID" == "7" ] && [ "$PLATFORM" == "centos" ]; then
-  DEPENDS='--depends "openssl >= 1.0.2"'
+  DEPENDS="--depends 'openssl >= 1.0.2'"
 else
   DEPENDS=''
 fi
@@ -162,7 +162,8 @@ fpm \
  --vendor ${VENDOR} \
  --maintainer "${MAINTAINER}" \
  --license 'Apache-2.0' \
- --category tools ${DEPENDS} \
+ --category tools \
+ ${DEPENDS} \
  --description 'Have indices in Elasticsearch? This is the tool for you!\n\nLike a museum curator manages the exhibits and collections on display, \nElasticsearch Curator helps you curate, or manage your indices.' \
  --after-install ${C_POST_INSTALL} \
  --before-remove ${C_PRE_REMOVE} \
