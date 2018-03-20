@@ -107,6 +107,13 @@ case "$ID" in
   *) echo "unknown system type: ${ID}"; exit 1;;
 esac
 
+# Improve RPM dependency for RHEL/Centos 7
+if [ "$VERSION_ID" == "7" ] && [ "$PLATFORM" == "centos" ]; then
+  DEPENDS='--depends "openssl >= 1.0.2"'
+else
+  DEPENDS=''
+fi
+
 HAS_PY3=$(which python${PYVER})
 if [ "${HAS_PY3}x" == "x" ]; then
   build_python ${PYVER}.${MINOR}
@@ -155,7 +162,7 @@ fpm \
  --vendor ${VENDOR} \
  --maintainer "${MAINTAINER}" \
  --license 'Apache-2.0' \
- --category tools \
+ --category tools ${DEPENDS} \
  --description 'Have indices in Elasticsearch? This is the tool for you!\n\nLike a museum curator manages the exhibits and collections on display, \nElasticsearch Curator helps you curate, or manage your indices.' \
  --after-install ${C_POST_INSTALL} \
  --before-remove ${C_PRE_REMOVE} \
