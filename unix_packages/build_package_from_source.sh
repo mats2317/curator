@@ -109,7 +109,7 @@ esac
 
 # Improve RPM dependency for RHEL/Centos 7
 if [ "$VERSION_ID" == "7" ] && [ "$PLATFORM" == "centos" ]; then
-  DEPENDS="--depends 'openssl >= 1.0.2'"
+  DEPENDS='--depends \'openssl > 1.0.2\''
 else
   DEPENDS=''
 fi
@@ -174,6 +174,8 @@ fpm \
  --conflicts python-elasticsearch-curator \
  --conflicts python3-elasticsearch-curator \
 /opt/elasticsearch-curator
+
+echo "DEPENDS => $DEPENDS"
 
 mv ${WORKDIR}/*.${PKGTYPE} ${PACKAGEDIR}
 
